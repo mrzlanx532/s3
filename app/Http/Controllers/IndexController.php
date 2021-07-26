@@ -14,4 +14,13 @@ class IndexController extends Controller
           'categoriesWithPublishedNewsCount' => $categoriesWithPublishedNewsCount
         ]);
     }
+
+    public function showCategory(Categories $category)
+    {
+        $category->loadCount('publishedNews');
+
+        return view('categories.show', [
+            'category' => $category
+        ]);
+    }
 }

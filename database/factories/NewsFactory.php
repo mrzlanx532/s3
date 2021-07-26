@@ -10,7 +10,7 @@ $factory->define(News::class, function (Faker $faker) {
         'category_id' => function() {
             return factory(App\Model\Categories::class)->create()->id;
         },
-        'header' => $faker->title(),
+        'header' => $faker->sentence(4),
         'publish_date' => $faker->date(),
         'preview_img' => $faker->imageUrl(),
         'preview_text' => $faker->text(),

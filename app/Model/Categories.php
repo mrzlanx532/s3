@@ -19,4 +19,9 @@ class Categories extends Model
             ->where('state',1)
             ->where('publish_date', '<', new \DateTime());
     }
+
+    public function getRouteKeyName()
+    {
+        return 'title';
+    }
 }

@@ -16,7 +16,7 @@
         </thead>
         <tbody>
         @foreach($categoriesWithPublishedNewsCount as $category)
-            <tr>
+            <tr class="cursor-pointer" onclick="window.location = '/{{$category->title}}'">
                 <th scope="row">{{ $category->id }}</th>
                 <td>{{ $category->title }}</td>
                 <td>{{ $category->published_news_count }}</td>
