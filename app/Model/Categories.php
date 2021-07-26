@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categories extends Model
 {
+    const STATE_UNPUBLISHED = 0;
+    const STATE_PUBLISHED = 1;
+
     public $timestamps = false;
 
     public function news()
@@ -16,9 +19,10 @@ class Categories extends Model
     public function publishedNews()
     {
         return $this->hasMany(News::class, 'category_id')
-            ->where('state',1)
-            ->where('publish_date', '<', new \DateTime())
-            ->orderBy('publish_date');
+            ->join('categories', 'categories.id', '=', 'news.category_id')
+            ->where('news.state',News::STATE_PUBLISHED)
+            ->where('news.publish_date', '<', new \DateTime())
+            ->where('categories.state', '=', Categories::STATE_PUBLISHED);
     }
 
     public function getRouteKeyName()
