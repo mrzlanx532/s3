@@ -13,3 +13,4 @@
 
 Route::get('/', 'IndexController@index');
 Route::get('/{category}', 'IndexController@showCategory');
+Route::get('/{category}/{news}', 'IndexController@showNews');

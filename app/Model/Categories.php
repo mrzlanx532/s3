@@ -17,7 +17,8 @@ class Categories extends Model
     {
         return $this->hasMany(News::class, 'category_id')
             ->where('state',1)
-            ->where('publish_date', '<', new \DateTime());
+            ->where('publish_date', '<', new \DateTime())
+            ->orderBy('publish_date');
     }
 
     public function getRouteKeyName()

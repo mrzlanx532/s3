@@ -11,14 +11,18 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Title</th>
-            <th scope="col">Publish news count</th>
+            <th scope="col"></th>
+            <th scope="col">Publish date</th>
+            <th scope="col">Header</th>
+            <th scope="col">Preview text</th>
         </tr>
         </thead>
         <tbody>
             @foreach($category->publishedNews as $news)
-                <tr>
+                <tr class="cursor-pointer" onclick="window.location = '/{{$category->title}}/{{$news->id}}-{{$news->header}}'">
                     <th scope="row">{{ $news->id }}</th>
+                    <td><img src="{{$news->preview_img}}" alt="Изображение недоступно"></td>
+                    <td class="text-nowrap">{{ $news->publish_date }}</td>
                     <td>{{ $news->header }}</td>
                     <td>{{ $news->preview_text }}</td>
                 </tr>
