@@ -1,0 +1,46 @@
+version: '3'
+
+networks:
+  s3_company:
+
+services:
+  nginx:
+    image: nginx:1.9
+    container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ../.:/var/www/data:delegated
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - php
+      - postgres
+    networks:
+      - s3_company
+  php:
+    container_name: php
+    build:
+      context: .
+      dockerfile: php.Dockerfile
+    volumes:
+      - ../.:/var/www/data
+    ports:
+      - 9000:9000
+    networks:
+      - s3_company
+  postgres:
+    container_name: postgres
+    image: "postgres:12.2"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 4aWvh75t
+      PGDATA: /data/postgres
+    volumes:
+      - ./postgres/data:/data/postgres
+      - ./postgres/scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - s3_company
+    restart: unless-stopped
