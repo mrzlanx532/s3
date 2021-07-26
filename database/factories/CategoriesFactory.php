@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model\NewsCategories;
+use App\Model\Categories;
 use Faker\Generator as Faker;
 
-$factory->define(NewsCategories::class, function (Faker $faker) {
+$factory->define(Categories::class, function (Faker $faker) {
     return [
         'title' => $faker->name
     ];
