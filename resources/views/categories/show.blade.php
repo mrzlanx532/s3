@@ -19,7 +19,7 @@
         </thead>
         <tbody>
             @foreach($category->publishedNews as $news)
-                <tr class="cursor-pointer" onclick="window.location = '/{{$category->title_transliteration}}/{{$news->id}}-{{$news->header_transliteration}}'">
+                <tr class="cursor-pointer" onclick="window.location = '/news/{{$category->title_transliteration}}/{{$news->id}}-{{$news->header_transliteration}}'">
                     <th scope="row">{{ $news->id }}</th>
                     <td><img src="{{$news->preview_img}}" alt="Изображение недоступно"></td>
                     <td class="text-nowrap">{{ $news->publish_date }}</td>
