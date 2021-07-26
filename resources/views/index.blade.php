@@ -5,5 +5,23 @@
 @endsection
 
 @section('content')
-    <h1>Hello world</h1>
+    <h1>News categories</h1>
+    <table class="table table-hover mt-5">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Publish news count</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($categoriesWithPublishedNewsCount as $category)
+            <tr>
+                <th scope="row">{{ $category->id }}</th>
+                <td>{{ $category->title }}</td>
+                <td>{{ $category->published_news_count }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 @endsection

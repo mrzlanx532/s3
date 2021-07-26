@@ -10,6 +10,13 @@ class Categories extends Model
 
     public function news()
     {
-        return $this->belongsTo(News::class);
+        return $this->hasMany(News::class, 'category_id');
+    }
+
+    public function publishedNews()
+    {
+        return $this->hasMany(News::class, 'category_id')
+            ->where('state',1)
+            ->where('publish_date', '<', new \DateTime());
     }
 }

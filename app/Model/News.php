@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class News extends Model
 {
-    public function categories()
+    public function category()
     {
-        return $this->hasOne(Categories::class);
+        return $this->belongsTo(Categories::class);
     }
 }
