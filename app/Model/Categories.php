@@ -23,6 +23,15 @@ class Categories extends Model
 
     public function getRouteKeyName()
     {
-        return 'title';
+        return 'title_transliteration';
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function($model) {
+            $model->title_transliteration = \URLify::slug($model->title);
+        });
     }
 }

@@ -12,5 +12,8 @@
 */
 
 Route::get('/', 'IndexController@index');
-Route::get('/{category}', 'IndexController@showCategory');
-Route::get('/{category}/{news}', 'IndexController@showNews');
+Route::get('/{category}', 'IndexController@showCategory')->where('category', '[a-z0-9._-]+');
+Route::get('/{category}/{news}', 'IndexController@showNews')->where([
+    'category' => '[a-z0-9._-]+',
+    'news' => '[a-z0-9._-]+',
+]);

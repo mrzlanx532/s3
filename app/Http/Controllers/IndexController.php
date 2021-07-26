@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Categories;
 use App\Model\News;
+use Illuminate\Support\Facades\Redirect;
 
 class IndexController extends Controller
 {

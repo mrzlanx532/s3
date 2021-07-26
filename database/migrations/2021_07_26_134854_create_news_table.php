@@ -23,6 +23,7 @@ class CreateNewsTable extends Migration
             $table->string('preview_text');
             $table->integer('views_count');
             $table->text('content');
+            $table->string('header_transliteration');
 
             $table->bigInteger('category_id');
             $table->index('category_id');
