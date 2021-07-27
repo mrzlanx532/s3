@@ -12,7 +12,7 @@ $factory->define(News::class, function (Faker $faker) {
         },
         'state' => $faker->numberBetween(0, 1),
         'header' => $faker->sentence(4),
-        'publish_date' => $faker->date(),
+        'publish_date' => $faker->dateTimeBetween('-10 days', 'now'),
         'preview_img' => $faker->imageUrl(100, 100),
         'preview_text' => $faker->text(100),
         'content' => $faker->text(500),
