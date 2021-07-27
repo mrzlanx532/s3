@@ -26,6 +26,11 @@
     - [x] На главной странице проекта (/) 302 редирект на `/news`
 
 Инструкция по деплою:
+0. `git clone https://github.com/mrzlanx532/s3.git .`
 1. `cd docker && docker-compose up -d`
 2. `sudo docker exec -ti php /bin/bash`
 3. `sh init.sh`
+
+Если нужно перезаполнить БД:
+1. `sudo docker exec -ti php /bin/bash`
+2. `sh init.sh`
