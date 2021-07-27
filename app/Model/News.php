@@ -25,11 +25,26 @@ class News extends Model
         return (new \DateTime($value))->format('d-m-Y H:s');
     }
 
+    public function getIdDashTitleTransliterationAttribute($value)
+    {
+        return $this->id . '-' . $this->header_transliteration;
+    }
+
+
     public function resolveRouteBinding($value)
     {
-        return $this->where([
+        $news = $this->where([
             'id' => Str::before($value, '-'),
             'header_transliteration' => Str::after($value, '-'),
+            'state' => News::STATE_PUBLISHED
+        ])->first();
+
+        if ($news) {
+            return $news;
+        }
+
+        return $this->where([
+            'id' => Str::before($value, '-'),
             'state' => News::STATE_PUBLISHED
         ])->firstOrFail();
     }

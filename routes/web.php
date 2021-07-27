@@ -16,10 +16,13 @@ Route::get('/', function() {
 });
 
 Route::group(['prefix' => 'news'], function() {
+
+    $transliterationRegex = '[a-z0-9._-]+';
+
     Route::get('/', 'IndexController@index');
-    Route::get('/{category}', 'IndexController@showCategory')->where('category', '[a-z0-9._-]+');
+    Route::get('/{category}', 'IndexController@showCategory')->where('category', $transliterationRegex);
     Route::get('/{category}/{news}', 'IndexController@showNews')->where([
-        'category' => '[a-z0-9._-]+',
-        'news' => '[a-z0-9._-]+',
+        'category' => $transliterationRegex,
+        'news' => $transliterationRegex,
     ]);
 });

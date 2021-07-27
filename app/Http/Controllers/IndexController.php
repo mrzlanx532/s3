@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Categories;
 use App\Model\News;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 
 class IndexController extends Controller
 {
@@ -50,11 +51,16 @@ class IndexController extends Controller
         ]);
     }
 
-    public function showNews(Categories $category, News $news)
+    public function showNews(Route $route, Categories $category, News $news)
     {
-        $news = News::query();
-
-
+        if ($route->originalParameter('news') !== $news->id_dash_title_transliteration)
+        {
+            return redirect(implode('/', [
+                '/news',
+                $category->title_transliteration,
+                $news->id_dash_title_transliteration,
+            ]));
+        }
 
         return view('news.show', [
             'news' => $news,
