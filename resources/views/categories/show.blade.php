@@ -1,9 +1,5 @@
 @extends('layouts.base')
 
-@section('title')
-    S3
-@endsection
-
 @section('content')
     <h1>Category {{ $category->title }}</h1>
     <h6>Count of news: {{ $category->published_news_count }}</h6>
