@@ -2,13 +2,13 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model\News;
+use App\Models\News;
 use Faker\Generator as Faker;
 
 $factory->define(News::class, function (Faker $faker) {
     return [
         'category_id' => function() {
-            return factory(App\Model\Categories::class)->create()->id;
+            return factory(App\Models\Categories::class)->create()->id;
         },
         'state' => $faker->numberBetween(0, 1),
         'header' => $faker->sentence(4),

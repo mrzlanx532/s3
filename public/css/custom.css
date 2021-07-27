@@ -1,3 +1,7 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.most-viewed-news__img {
+    width: 100%;
+}

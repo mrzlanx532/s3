@@ -11,8 +11,8 @@ class NewsWithCategoriesSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Model\Categories::class, 3)->create()->each(function ($category) {
-            factory(App\Model\News::class, 20)->create(['category_id' => $category->id]);
+        factory(App\Models\Categories::class, 3)->create()->each(function ($category) {
+            factory(App\Models\News::class, 20)->create(['category_id' => $category->id]);
         });
     }
 }

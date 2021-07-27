@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +25,7 @@ class News extends Model
         return (new \DateTime($value))->format('d-m-Y H:s');
     }
 
-    public function getIdDashTitleTransliterationAttribute($value)
+    public function getIdDashHeaderTransliterationAttribute($value)
     {
         return $this->id . '-' . $this->header_transliteration;
     }

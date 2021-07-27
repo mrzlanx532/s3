@@ -2,68 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Categories;
-use App\Model\News;
+use App\Models\Categories;
+use App\Models\News;
+use App\QueryBuilders\NewsQueryBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 
 class IndexController extends Controller
 {
+    private $newsRepository;
+
+    public function __construct(NewsQueryBuilder $newsRepository)
+    {
+        $this->newsRepository = $newsRepository;
+    }
+
     public function index()
     {
         $categoriesWithPublishedNewsCount = Categories::withCount('publishedNews')->get();
+        $mostViewedNews = $this->newsRepository->getMostViewedNews();
+
 
         return view('index', [
-          'categoriesWithPublishedNewsCount' => $categoriesWithPublishedNewsCount
+            'categoriesWithPublishedNewsCount' => $categoriesWithPublishedNewsCount,
+            'mostViewedNews' => $mostViewedNews->get()
         ]);
     }
 
     public function showCategory(Request $request, Categories $category)
     {
         $category->loadCount('publishedNews');
-
-        $newsBuilder = News::query()
-            ->select([
-                'categories.title as category_title',
-                'news.id as news_id',
-                'news.header_transliteration as news_header_transliteration',
-                'news.preview_img as news_preview_img',
-                'news.publish_date as news_publish_date',
-                'news.header as news_header',
-                'news.preview_text as news_preview_text'
-            ])
-            ->leftjoin('categories', 'news.category_id', '=', 'categories.id')
-            ->where('categories.id', '=', $category->id)
-            ->where('categories.state', '=', Categories::STATE_PUBLISHED)
-            ->where('news.state', '=', News::STATE_PUBLISHED)
-            ->where('news.publish_date', '<', new \DateTime())
-            ->orderBy('publish_date')
-            ->limit(10);
+        $newsBuilder = $this->newsRepository->getNewsByCategory($category);
+        $newsBuilder->limit(10);
 
         if ($request->get('page')) {
             $newsBuilder->offset($request->get('page') * 10 - 10);
         }
 
+        $mostViewedNews = $this->newsRepository->getMostViewedNews();
+        $mostViewedNews->where('categories.id', $category->id);
+
         return view('categories.show', [
             'category' => $category,
             'news' => $newsBuilder->get(),
-            'page' => $request->get('page') ? $request->get('page') : 1
+            'page' => $request->get('page') ? $request->get('page') : 1,
+            'mostViewedNews' => $mostViewedNews->get()
         ]);
     }
 
     public function showNews(Route $route, Categories $category, News $news)
     {
-        if ($route->originalParameter('news') !== $news->id_dash_title_transliteration)
+        if ($route->originalParameter('news') !== $news->id_dash_header_transliteration)
         {
             return redirect(implode('/', [
                 '/news',
                 $category->title_transliteration,
-                $news->id_dash_title_transliteration,
+                $news->id_dash_header_transliteration,
             ]));
         }
 
+        $mostViewedNews = $this->newsRepository->getMostViewedNews();
+        $mostViewedNews->whereNotIn('news.id', [$news->id]);
+
         return view('news.show', [
             'news' => $news,
+            'mostViewedNews' => $mostViewedNews->get()
         ]);
     }
 }

@@ -12,6 +12,7 @@
 <body>
     <div class="container mt-5">
         @yield('content')
+        @include('base.mostViewedNews')
     </div>
 </body>
 </html>
